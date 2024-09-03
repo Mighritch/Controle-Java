@@ -2,6 +2,7 @@ package tn.java.entities;
 
 import java.time.LocalDate;
 
+
 public class Event {
     private int id; // Ajoutez cet attribut pour l'identifiant
     private String nom;
@@ -11,6 +12,9 @@ public class Event {
     private int nombrePlaces;
     private LocalDate date;
 
+    public Event(){
+
+    }
     // Constructeur avec ID
     public Event(int id, String nom, String description, String image, String emplacement, int nombrePlaces, LocalDate date) {
         this.id = id;

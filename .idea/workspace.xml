@@ -5,20 +5,16 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="fb9f9444-095d-4e29-90ff-6cc8610543e2" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.mvn/wrapper/maven-wrapper.jar" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.mvn/wrapper/maven-wrapper.properties" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mvnw" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mvnw.cmd" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/controle/HelloApplication.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/controle/HelloController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/module-info.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/com/example/controle/hello-view.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tn/java/controllers/AjoutCategorie.java" beforeDir="false" afterPath="$PROJECT_DIR$/tn/java/controllers/AjoutCategorie.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tn/java/controllers/AjoutEvent.java" beforeDir="false" afterPath="$PROJECT_DIR$/tn/java/controllers/AjoutEvent.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tn/java/entities/Event.java" beforeDir="false" afterPath="$PROJECT_DIR$/tn/java/entities/Event.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tn/java/resources/AjoutCategorie.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/tn/java/resources/AjoutCategorie.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tn/java/resources/AjoutEvent.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/tn/java/resources/AjoutEvent.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tn/java/services/IService.java" beforeDir="false" afterPath="$PROJECT_DIR$/tn/java/services/IService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tn/java/services/ServiceCategorie.java" beforeDir="false" afterPath="$PROJECT_DIR$/tn/java/services/ServiceCategorie.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tn/java/services/ServiceEvent.java" beforeDir="false" afterPath="$PROJECT_DIR$/tn/java/services/ServiceEvent.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -38,6 +34,9 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
   <component name="ProblemsViewState">
     <option name="selectedTabId" value="CurrentFile" />
   </component>
@@ -56,7 +55,7 @@
     &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
     &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
@@ -75,6 +74,9 @@
       <workItem from="1725186024614" duration="8503000" />
       <workItem from="1725280022358" duration="3683000" />
       <workItem from="1725306273171" duration="5072000" />
+      <workItem from="1725356726148" duration="3024000" />
+      <workItem from="1725373714188" duration="1184000" />
+      <workItem from="1725374949348" duration="2964000" />
     </task>
     <servers />
   </component>

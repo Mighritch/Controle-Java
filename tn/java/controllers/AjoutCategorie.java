@@ -42,6 +42,12 @@ public class AjoutCategorie {
     private Button btnSupprimer;
 
     @FXML
+    private Button btnRecherche;
+
+    @FXML
+    private Button btnTri;
+
+    @FXML
     private TableColumn<Categorie, String> colImage;
 
     @FXML
@@ -54,6 +60,9 @@ public class AjoutCategorie {
     private TextField Nom;
 
     @FXML
+    private TextField searchField;
+
+    @FXML
     void Afficher(ActionEvent event) {
         ServiceCategorie service = new ServiceCategorie();
         try {
@@ -64,7 +73,6 @@ public class AjoutCategorie {
             e.printStackTrace();
         }
         showCategorie();
-
     }
 
     public ObservableList<Categorie> getCategories() {
@@ -187,4 +195,26 @@ public class AjoutCategorie {
         Optional<ButtonType> result = alert.showAndWait();
         return result.isPresent() && result.get() == buttonTypeYes;
     }
+
+    @FXML
+    void Recherche(ActionEvent event) {
+        String searchText = searchField.getText();
+        ServiceCategorie serviceCategorie = new ServiceCategorie();
+        try {
+            List<Categorie> filteredCategories = serviceCategorie.rechercherParNom(searchText);
+            ObservableList<Categorie> observableCategories = FXCollections.observableArrayList(filteredCategories);
+            table.setItems(observableCategories);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+
+    @FXML
+    void Tri(ActionEvent event) {
+        ObservableList<Categorie> sortedList = FXCollections.observableArrayList(table.getItems());
+        sortedList.sort((cat1, cat2) -> cat1.getNom().compareToIgnoreCase(cat2.getNom()));
+        table.setItems(sortedList);
+    }
 }
+

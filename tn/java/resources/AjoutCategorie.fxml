@@ -33,5 +33,8 @@
           <TableColumn fx:id="colImage" prefWidth="105.60003662109375" text="image" />
         </columns>
       </TableView>
+      <TextField fx:id="searchField" layoutX="555.0" layoutY="237.0" prefHeight="26.0" prefWidth="102.0" />
+      <Button fx:id="btnRecherche" layoutX="465.0" layoutY="238.0" mnemonicParsing="false" onAction="#Recherche" text="Recherche" />
+      <Button fx:id="btnTri" layoutX="50.0" layoutY="251.0" mnemonicParsing="false" onAction="#Tri" text="Tri" />
    </children>
 </AnchorPane>
