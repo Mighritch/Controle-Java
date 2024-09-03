@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+
+<AnchorPane prefHeight="536.0" prefWidth="843.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tn.java.controllers.AjoutEvent">
+    <children>
+        <TableView fx:id="Table" layoutX="293.0" layoutY="52.0" prefHeight="200.0" prefWidth="536.0">
+            <columns>
+                <TableColumn fx:id="colNom" prefWidth="75.0" text="Nom" />
+                <TableColumn fx:id="colDescription" prefWidth="75.0" text="Description" />
+                <TableColumn fx:id="colImage" prefWidth="75.0" text="Image" />
+                <TableColumn fx:id="colEmplacement" prefWidth="104.00003051757812" text="Emplacement" />
+                <TableColumn fx:id="colNombreplace" prefWidth="100.79998779296875" text="Nombre place" />
+                <TableColumn fx:id="colDate" prefWidth="100.79998779296875" text="Date" />
+            </columns>
+        </TableView>
+        <Button fx:id="btnAjout" layoutX="71.0" layoutY="343.0" mnemonicParsing="false" onAction="#Ajouter" text="Ajouter" />
+        <Button fx:id="btnAffiche" layoutX="155.0" layoutY="343.0" mnemonicParsing="false" onAction="#Afficher" text="Afficher" />
+        <Button fx:id="btnModifier" layoutX="71.0" layoutY="399.0" mnemonicParsing="false" onAction="#Modifier" text="Modifier" />
+        <Button fx:id="btnSupprimer" layoutX="155.0" layoutY="399.0" mnemonicParsing="false" onAction="#Supprimer" text="Supprimer" />
+        <VBox layoutX="11.0" layoutY="14.0" prefHeight="238.0" prefWidth="255.0">
+            <children>
+                <Label prefHeight="18.0" prefWidth="35.0" text="Nom" />
+                <TextField fx:id="Nom" />
+                <Label text="Description" />
+                <TextField fx:id="Description" />
+                <Label text="Image" />
+                <Button fx:id="btnChoisirImage" mnemonicParsing="false" onAction="#ChoisirImage" text="Choisir image" />
+                <Label text="Emplacement" />
+                <TextField fx:id="Emplacement" />
+                <Label text="Nombre place" />
+                <TextField fx:id="Nombreplace" />
+                <Label text="Date" />
+                <DatePicker fx:id="Date" prefHeight="26.0" prefWidth="284.0" />
+            </children>
+        </VBox>
+    </children>
+</AnchorPane>
