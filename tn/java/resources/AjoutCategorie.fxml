@@ -15,8 +15,6 @@
          <children>
             <Label prefHeight="18.0" prefWidth="36.0" text="Nom" />
             <TextField fx:id="Nom" />
-            <Label prefHeight="18.0" prefWidth="42.0" text="Image" />
-            <Button fx:id="btnChoisirImage" mnemonicParsing="false" onAction="#ChoisirImage" text="Choisir image" />
          </children>
       </VBox>
       <ButtonBar layoutX="14.0" layoutY="197.0" prefHeight="40.0" prefWidth="349.0">
@@ -29,8 +27,7 @@
       </ButtonBar>
       <TableView fx:id="table" layoutX="441.0" layoutY="30.0" prefHeight="200.0" prefWidth="205.0">
         <columns>
-          <TableColumn fx:id="colNom" prefWidth="99.19998168945312" text="nom" />
-          <TableColumn fx:id="colImage" prefWidth="105.60003662109375" text="image" />
+          <TableColumn fx:id="colNom" prefWidth="204.79998168945312" text="nom" />
         </columns>
       </TableView>
       <TextField fx:id="searchField" layoutX="555.0" layoutY="237.0" prefHeight="26.0" prefWidth="102.0" />

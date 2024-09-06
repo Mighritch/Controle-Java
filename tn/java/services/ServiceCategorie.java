@@ -3,8 +3,6 @@ package tn.java.services;
 import java.sql.*;
 import java.util.*;
 
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import tn.java.entities.Categorie;
 import tn.java.utils.DataSource;
 
@@ -14,21 +12,19 @@ public class ServiceCategorie implements IService<Categorie> {
 
     @Override
     public void ajouter(Categorie categorie) throws SQLException {
-        String query = "INSERT INTO categorie (nom, image) VALUES (?, ?)";
+        String query = "INSERT INTO categorie (nom) VALUES (?)";
         try (PreparedStatement statement = cnx.prepareStatement(query)) {
             statement.setString(1, categorie.getNom());
-            statement.setString(2, categorie.getImage());
             statement.executeUpdate();
         }
     }
 
     @Override
     public void modifier(Categorie categorie) throws SQLException {
-        String query = "UPDATE categorie SET nom = ?, image = ? WHERE id = ?";
+        String query = "UPDATE categorie SET nom = ? WHERE id = ?";
         try (PreparedStatement statement = cnx.prepareStatement(query)) {
             statement.setString(1, categorie.getNom());
-            statement.setString(2, categorie.getImage());
-            statement.setInt(3, categorie.getId());
+            statement.setInt(2, categorie.getId());
             statement.executeUpdate();
         }
     }
@@ -50,31 +46,14 @@ public class ServiceCategorie implements IService<Categorie> {
             ResultSet resultSet = statement.executeQuery();
             if (resultSet.next()) {
                 String nom = resultSet.getString("nom");
-                String image = resultSet.getString("image");
-                return new Categorie(id, nom, image);
+                return new Categorie(id, nom);
             }
         }
         return null;
     }
 
     @Override
-    public Set<Categorie> getAll() throws SQLException {
-        Set<Categorie> categories = new HashSet<>();
-        String query = "SELECT * FROM categorie";
-        try (Statement statement = cnx.createStatement()) {
-            ResultSet resultSet = statement.executeQuery(query);
-            while (resultSet.next()) {
-                int id = resultSet.getInt("id");
-                String nom = resultSet.getString("nom");
-                String image = resultSet.getString("image");
-                categories.add(new Categorie(id, nom, image));
-            }
-        }
-        return categories;
-    }
-
-    @Override
-    public List<Categorie> afficher() throws SQLException {
+    public List<Categorie> getAll() throws SQLException {
         List<Categorie> categories = new ArrayList<>();
         String query = "SELECT * FROM categorie";
         try (Statement statement = cnx.createStatement()) {
@@ -82,11 +61,15 @@ public class ServiceCategorie implements IService<Categorie> {
             while (resultSet.next()) {
                 int id = resultSet.getInt("id");
                 String nom = resultSet.getString("nom");
-                String image = resultSet.getString("image");
-                categories.add(new Categorie(id, nom, image));
+                categories.add(new Categorie(id, nom));
             }
         }
         return categories;
+    }
+
+    @Override
+    public List<Categorie> afficher() throws SQLException {
+        return getAll(); // Réutiliser getAll pour afficher les catégories
     }
 
     @Override
@@ -94,18 +77,15 @@ public class ServiceCategorie implements IService<Categorie> {
         List<Categorie> filteredCategories = new ArrayList<>();
         String query = "SELECT * FROM categorie WHERE nom LIKE ?";
         try (PreparedStatement sp = cnx.prepareStatement(query)) {
-            sp.setString(1, "%" + nom + "%"); // Partial search
+            sp.setString(1, "%" + nom + "%"); // Recherche partielle
             ResultSet rs = sp.executeQuery();
 
             while (rs.next()) {
                 int id = rs.getInt("id");
                 String nomCategorie = rs.getString("nom");
-                String image = rs.getString("image");
-                filteredCategories.add(new Categorie(id, nomCategorie, image));
+                filteredCategories.add(new Categorie(id, nomCategorie));
             }
         }
         return filteredCategories;
     }
 }
-
-

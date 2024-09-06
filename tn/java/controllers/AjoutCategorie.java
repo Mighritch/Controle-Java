@@ -5,24 +5,22 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
-import javafx.stage.FileChooser;
+import javafx.scene.control.TextField;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.scene.control.cell.PropertyValueFactory;
 import tn.java.entities.Categorie;
 import tn.java.services.ServiceCategorie;
+import tn.java.utils.DataSource;
 
-import java.io.File;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.Optional;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
-import javafx.scene.control.Alert;
-import javafx.scene.control.ButtonType;
-import javafx.scene.control.TextField;
-import javafx.scene.control.cell.PropertyValueFactory;
-import tn.java.utils.DataSource;
 
 public class AjoutCategorie {
 
@@ -31,9 +29,6 @@ public class AjoutCategorie {
 
     @FXML
     private Button btnAjouter;
-
-    @FXML
-    private Button btnChoisirImage;
 
     @FXML
     private Button btnModifier;
@@ -46,9 +41,6 @@ public class AjoutCategorie {
 
     @FXML
     private Button btnTri;
-
-    @FXML
-    private TableColumn<Categorie, String> colImage;
 
     @FXML
     private TableColumn<Categorie, String> colNom;
@@ -85,7 +77,6 @@ public class AjoutCategorie {
             while (rs.next()) {
                 Categorie cat = new Categorie();
                 cat.setNom(rs.getString("nom"));
-                cat.setImage(rs.getString("image"));
                 cat.setId(rs.getInt("id"));
                 categories.add(cat);
             }
@@ -99,16 +90,19 @@ public class AjoutCategorie {
         ObservableList<Categorie> list = getCategories();
         table.setItems(list);
         colNom.setCellValueFactory(new PropertyValueFactory<>("nom"));
-        colImage.setCellValueFactory(new PropertyValueFactory<>("image"));
         table.refresh();
     }
 
     @FXML
     void Ajouter(ActionEvent event) {
         String nom = Nom.getText();
-        String image = "default.jpg";
 
-        Categorie newCategorie = new Categorie(nom, image);
+        if (nom == null || nom.trim().isEmpty()) {
+            showAlert("Erreur", "Le nom ne peut pas être vide.");
+            return;
+        }
+
+        Categorie newCategorie = new Categorie(nom);
 
         ServiceCategorie serviceCategorie = new ServiceCategorie();
         try {
@@ -120,35 +114,21 @@ public class AjoutCategorie {
     }
 
     @FXML
-    void ChoisirImage(ActionEvent event) {
-        FileChooser fileChooser = new FileChooser();
-        fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Image Files", "*.png", "*.jpg", "*.jpeg"));
-        File selectedFile = fileChooser.showOpenDialog(null);
-
-        if (selectedFile != null) {
-            // Assigner le chemin de l'image ici
-            // Par exemple : eventImagePath = selectedFile.getAbsolutePath();
-        }
-    }
-
-    @FXML
     void Modifier(ActionEvent event) {
         Categorie selectedCategorie = table.getSelectionModel().getSelectedItem();
         if (selectedCategorie == null) {
-            System.out.println("Aucune catégorie sélectionnée.");
+            showAlert("Erreur", "Aucune catégorie sélectionnée.");
             return;
         }
 
         String nomValue = Nom.getText();
-        String image = "default.jpg";
 
         if (nomValue == null || nomValue.trim().isEmpty()) {
-            System.out.println("Le nom ne peut pas être vide.");
+            showAlert("Erreur", "Le nom ne peut pas être vide.");
             return;
         }
 
         selectedCategorie.setNom(nomValue);
-        selectedCategorie.setImage(image);
 
         ServiceCategorie serviceCategorie = new ServiceCategorie();
         try {
@@ -163,7 +143,7 @@ public class AjoutCategorie {
     void Supprimer(ActionEvent event) {
         Categorie selectedCategorie = table.getSelectionModel().getSelectedItem();
         if (selectedCategorie == null) {
-            System.out.println("Aucune catégorie sélectionnée.");
+            showAlert("Erreur", "Aucune catégorie sélectionnée.");
             return;
         }
 
@@ -209,12 +189,20 @@ public class AjoutCategorie {
         }
     }
 
-
     @FXML
     void Tri(ActionEvent event) {
         ObservableList<Categorie> sortedList = FXCollections.observableArrayList(table.getItems());
         sortedList.sort((cat1, cat2) -> cat1.getNom().compareToIgnoreCase(cat2.getNom()));
         table.setItems(sortedList);
     }
+
+    private void showAlert(String title, String content) {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle(title);
+        alert.setHeaderText(null);
+        alert.setContentText(content);
+        alert.showAndWait();
+    }
 }
+
 

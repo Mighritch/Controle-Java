@@ -19,14 +19,13 @@ public class ServiceEvent implements IService<Event> {
 
     @Override
     public void ajouter(Event event) throws SQLException {
-        String query = "INSERT INTO event (nom, description, image, emplacement, nombre_places, date) VALUES (?, ?, ?, ?, ?, ?)";
+        String query = "INSERT INTO event (nom, description, emplacement, nombre_places, date) VALUES (?, ?, ?, ?, ?)";
         try (PreparedStatement ps = cnx.prepareStatement(query)) {
             ps.setString(1, event.getNom());
             ps.setString(2, event.getDescription());
-            ps.setString(3, event.getImage());
-            ps.setString(4, event.getEmplacement());
-            ps.setInt(5, event.getNombrePlaces());
-            ps.setDate(6, Date.valueOf(event.getDate()));
+            ps.setString(3, event.getEmplacement());
+            ps.setInt(4, event.getNombrePlaces());
+            ps.setDate(5, Date.valueOf(event.getDate()));
             ps.executeUpdate();
             System.out.println("Event ajouté avec succès !");
         } catch (SQLException e) {
@@ -37,26 +36,22 @@ public class ServiceEvent implements IService<Event> {
 
     @Override
     public void modifier(Event event) throws SQLException {
-        String query = "UPDATE event SET nom = ?, description = ?, image = ?, emplacement = ?, nombre_places = ?, date = ? WHERE id = ?";
+        String query = "UPDATE event SET nom = ?, description = ?, emplacement = ?, nombre_places = ?, date = ? WHERE id = ?";
         try (PreparedStatement ps = cnx.prepareStatement(query)) {
             ps.setString(1, event.getNom());
             ps.setString(2, event.getDescription());
-            ps.setString(3, event.getImage());
-            ps.setString(4, event.getEmplacement());
-            ps.setInt(5, event.getNombrePlaces());
-            ps.setDate(6, Date.valueOf(event.getDate()));
-            ps.setInt(7, event.getId());
-            int rowsUpdated = ps.executeUpdate();
-            if (rowsUpdated > 0) {
-                System.out.println("Event modifié avec succès !");
-            } else {
-                System.out.println("Aucun événement trouvé avec l'ID spécifié.");
-            }
+            ps.setString(3, event.getEmplacement());
+            ps.setInt(4, event.getNombrePlaces());
+            ps.setDate(5, Date.valueOf(event.getDate()));
+            ps.setInt(6, event.getId());
+            ps.executeUpdate();
+            System.out.println("Event modifié avec succès !");
         } catch (SQLException e) {
             e.printStackTrace();
             throw new SQLException("Erreur lors de la modification de l'événement : " + e.getMessage());
         }
     }
+
 
     @Override
     public void supprimer(int id) throws SQLException {
@@ -87,7 +82,6 @@ public class ServiceEvent implements IService<Event> {
                         rs.getInt("id"), // Ajout de l'ID ici
                         rs.getString("nom"),
                         rs.getString("description"),
-                        rs.getString("image"),
                         rs.getString("emplacement"),
                         rs.getInt("nombre_places"),
                         rs.getDate("date").toLocalDate()
@@ -101,26 +95,18 @@ public class ServiceEvent implements IService<Event> {
     }
 
     @Override
-    public Set<Event> getAll() throws SQLException {
+    public List<Event> getAll() throws SQLException {
+        List<Event> events = new ArrayList<>();
         String query = "SELECT * FROM event";
-        Set<Event> events = new HashSet<>();
-        try (Statement stmt = cnx.createStatement();
-             ResultSet rs = stmt.executeQuery(query)) {
+        try (Statement st = cnx.createStatement(); ResultSet rs = st.executeQuery(query)) {
             while (rs.next()) {
-                Event event = new Event(
-                        rs.getInt("id"), // Ajout de l'ID ici
-                        rs.getString("nom"),
-                        rs.getString("description"),
-                        rs.getString("image"),
-                        rs.getString("emplacement"),
-                        rs.getInt("nombre_places"),
-                        rs.getDate("date").toLocalDate()
-                );
+                Event event = new Event(rs.getInt("id"), rs.getString("nom"), rs.getString("description"),
+                        rs.getString("emplacement"), rs.getInt("nombre_places"), rs.getDate("date").toLocalDate());
                 events.add(event);
             }
         } catch (SQLException e) {
             e.printStackTrace();
-            throw new SQLException("Erreur lors de la récupération de tous les événements : " + e.getMessage());
+            throw new SQLException("Erreur lors de la récupération des événements : " + e.getMessage());
         }
         return events;
     }
@@ -137,7 +123,6 @@ public class ServiceEvent implements IService<Event> {
                         rs.getInt("id"), // Ajout de l'ID ici
                         rs.getString("nom"),
                         rs.getString("description"),
-                        rs.getString("image"),
                         rs.getString("emplacement"),
                         rs.getInt("nombre_places"),
                         rs.getDate("date").toLocalDate()
@@ -161,7 +146,6 @@ public class ServiceEvent implements IService<Event> {
                         rs.getInt("id"),
                         rs.getString("nom"),
                         rs.getString("description"),
-                        rs.getString("image"),
                         rs.getString("emplacement"),
                         rs.getInt("nombre_places"),
                         rs.getDate("date").toLocalDate()
@@ -171,7 +155,4 @@ public class ServiceEvent implements IService<Event> {
         }
         return events;
     }
-
-
 }
-

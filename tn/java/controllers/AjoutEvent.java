@@ -24,6 +24,8 @@ import java.sql.ResultSet;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 
 public class AjoutEvent {
 
@@ -109,7 +111,6 @@ public class AjoutEvent {
                 event.setId(rs.getInt("id"));
                 event.setNom(rs.getString("nom"));
                 event.setDescription(rs.getString("description"));
-                event.setImage(rs.getString("image"));
                 event.setEmplacement(rs.getString("emplacement"));
                 event.setNombrePlaces(rs.getInt("nombre_places"));
                 event.setDate(rs.getDate("date").toLocalDate());
@@ -124,12 +125,13 @@ public class AjoutEvent {
     public void showEvent() {
         ObservableList<Event> list = getEvents(); // Récupère la liste des événements
         Table.setItems(list); // Définit les éléments du TableView
+
         colNom.setCellValueFactory(new PropertyValueFactory<>("nom"));
         colDescription.setCellValueFactory(new PropertyValueFactory<>("description"));
-        colImage.setCellValueFactory(new PropertyValueFactory<>("image"));
-        colEmplacement.setCellValueFactory(new PropertyValueFactory<>("emplacement"));
-        colNombreplace.setCellValueFactory(new PropertyValueFactory<>("nombrePlaces"));
-        colDate.setCellValueFactory(new PropertyValueFactory<>("date"));
+        colEmplacement.setCellValueFactory(new PropertyValueFactory<>("emplacement")); // Correctement lié à 'emplacement'
+        colNombreplace.setCellValueFactory(new PropertyValueFactory<>("nombrePlaces")); // Correctement lié à 'nombrePlaces'
+        colDate.setCellValueFactory(new PropertyValueFactory<>("date")); // Correctement lié à 'date'
+
         Table.refresh(); // Rafraîchit le TableView pour afficher les données
     }
 
@@ -139,14 +141,14 @@ public class AjoutEvent {
         if (Nom.getText().isEmpty() || Description.getText().isEmpty() || Emplacement.getText().isEmpty() ||
                 Nombreplace.getText().isEmpty() || Date.getValue() == null) {
             // Afficher un message d'erreur
-            System.out.println("Tous les champs doivent être remplis");
+            showAlert(AlertType.ERROR, "Erreur de validation", "Tous les champs doivent être remplis.");
             return;
         }
 
         // Vérification que les champs nom, description, emplacement ne dépassent pas 50 caractères
         if (Nom.getText().length() > 50 || Description.getText().length() > 50 || Emplacement.getText().length() > 50) {
             // Afficher un message d'erreur
-            System.out.println("Nom, Description et Emplacement ne doivent pas dépasser 50 caractères");
+            showAlert(AlertType.ERROR, "Erreur de validation", "Nom, Description et Emplacement ne doivent pas dépasser 50 caractères.");
             return;
         }
 
@@ -155,18 +157,18 @@ public class AjoutEvent {
         try {
             nombrePlaces = Integer.parseInt(Nombreplace.getText());
             if (nombrePlaces <= 0) {
-                System.out.println("Le nombre de places doit être supérieur à 0");
+                showAlert(AlertType.ERROR, "Erreur de validation", "Le nombre de places doit être supérieur à 0.");
                 return;
             }
         } catch (NumberFormatException e) {
-            System.out.println("Le nombre de places doit être un nombre valide");
+            showAlert(AlertType.ERROR, "Erreur de validation", "Le nombre de places doit être un nombre valide.");
             return;
         }
 
         // Vérification que la date est au moins la date du système
         LocalDate date = Date.getValue();
         if (date.isBefore(LocalDate.now())) {
-            System.out.println("La date ne peut pas être antérieure à la date actuelle");
+            showAlert(AlertType.ERROR, "Erreur de validation", "La date ne peut pas être antérieure à la date actuelle.");
             return;
         }
 
@@ -176,15 +178,25 @@ public class AjoutEvent {
         String emplacement = Emplacement.getText();
         String image = "default.jpg"; // Vous pouvez remplacer par le chemin réel de l'image
 
-        Event newEvent = new Event(nom, description, image, emplacement, nombrePlaces, date);
+        Event newEvent = new Event(nom, description, emplacement, nombrePlaces, date);
 
         ServiceEvent serviceEvent = new ServiceEvent();
         try {
             serviceEvent.ajouter(newEvent);
-            Afficher(null); // Refresh the table
+            Afficher(null); // Rafraîchit la table après ajout
+            showAlert(AlertType.INFORMATION, "Succès", "L'événement a été ajouté avec succès.");
         } catch (SQLException e) {
             e.printStackTrace();
+            showAlert(AlertType.ERROR, "Erreur d'ajout", "Erreur lors de l'ajout de l'événement.");
         }
+    }
+
+    private void showAlert(Alert.AlertType alertType, String title, String message) {
+        Alert alert = new Alert(alertType);
+        alert.setTitle(title);
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        alert.showAndWait();
     }
 
     @FXML
