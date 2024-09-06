@@ -41,5 +41,6 @@
       <Button fx:id="btnRechecherche" layoutX="328.0" layoutY="273.0" mnemonicParsing="false" onAction="#Recherche" text="Recherche" />
       <TextField fx:id="SearchField" layoutX="422.0" layoutY="273.0" />
       <Button fx:id="btnTri" layoutX="73.0" layoutY="448.0" mnemonicParsing="false" onAction="#Tri" text="Tri" />
+      <Button fx:id="btnStat" layoutX="158.0" layoutY="448.0" mnemonicParsing="false" onAction="#Stat" text="Stat" />
     </children>
 </AnchorPane>

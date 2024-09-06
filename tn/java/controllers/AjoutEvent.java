@@ -26,6 +26,13 @@ import javafx.collections.ObservableList;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.stage.Stage;
+import javafx.fxml.FXMLLoader;
+import java.io.IOException;  // Assurez-vous que cela est importé
+import java.util.Map;
+import java.util.HashMap;
 
 public class AjoutEvent {
 
@@ -70,6 +77,9 @@ public class AjoutEvent {
 
     @FXML
     private Button btnTri;
+
+    @FXML
+    private Button btnStat;
 
     @FXML
     private TableColumn<Event, LocalDate> colDate;
@@ -272,4 +282,48 @@ public class AjoutEvent {
         // Mettez à jour le TableView avec la liste triée
         Table.setItems(sortedList);
     }
+
+    @FXML
+    void Stat(ActionEvent event) {
+        try {
+            // Requête SQL pour récupérer le nombre d'événements par emplacement
+            String query = "SELECT emplacement, COUNT(*) AS nombre_events FROM event GROUP BY emplacement";
+
+            Connection con = DataSource.getInstance().getCnx();
+            PreparedStatement sp = con.prepareStatement(query);
+            ResultSet rs = sp.executeQuery();
+
+            // Stocker les résultats dans une Map ou une liste pour les passer au graphique
+            Map<String, Integer> stats = new HashMap<>();
+
+            while (rs.next()) {
+                String emplacement = rs.getString("emplacement");
+                int nombreEvents = rs.getInt("nombre_events");
+                stats.put(emplacement, nombreEvents); // Ajouter chaque emplacement et son nombre d'événements
+            }
+
+            // Création d'un FXMLLoader
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/tn/java/resources/stat.fxml"));
+
+            // Chargement du fichier FXML
+            Parent root = loader.load();
+
+            // Récupérer le contrôleur du fichier FXML pour y injecter les données
+            Stat statController = loader.getController();
+            statController.displayStats(stats); // Passer les données récupérées au contrôleur des statistiques
+
+            // Création de la scène et du stage
+            Stage stage = new Stage();
+            stage.setScene(new Scene(root));
+            stage.setTitle("Statistiques des lieux");
+            stage.show();
+        } catch (IOException | SQLException e) {
+            // Gestion des erreurs
+            e.printStackTrace();
+            showAlert(Alert.AlertType.ERROR, "Erreur", "Erreur lors du chargement des statistiques.");
+        }
+    }
+
+
+
 }

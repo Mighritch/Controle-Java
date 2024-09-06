@@ -6,17 +6,8 @@
   <component name="ChangeListManager">
     <list default="true" id="fb9f9444-095d-4e29-90ff-6cc8610543e2" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tn/java/controllers/AfficheEvent.java" beforeDir="false" afterPath="$PROJECT_DIR$/tn/java/controllers/AfficheEvent.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tn/java/controllers/AjoutCategorie.java" beforeDir="false" afterPath="$PROJECT_DIR$/tn/java/controllers/AjoutCategorie.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/tn/java/controllers/AjoutEvent.java" beforeDir="false" afterPath="$PROJECT_DIR$/tn/java/controllers/AjoutEvent.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tn/java/entities/Categorie.java" beforeDir="false" afterPath="$PROJECT_DIR$/tn/java/entities/Categorie.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tn/java/entities/Event.java" beforeDir="false" afterPath="$PROJECT_DIR$/tn/java/entities/Event.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tn/java/resources/AfficheEvent.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/tn/java/resources/AfficheEvent.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tn/java/resources/AjoutCategorie.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/tn/java/resources/AjoutCategorie.fxml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/tn/java/resources/AjoutEvent.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/tn/java/resources/AjoutEvent.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tn/java/services/IService.java" beforeDir="false" afterPath="$PROJECT_DIR$/tn/java/services/IService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tn/java/services/ServiceCategorie.java" beforeDir="false" afterPath="$PROJECT_DIR$/tn/java/services/ServiceCategorie.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tn/java/services/ServiceEvent.java" beforeDir="false" afterPath="$PROJECT_DIR$/tn/java/services/ServiceEvent.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -27,9 +18,9 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="Interface" />
+        <option value="JavaFXApplication" />
         <option value="FxmlFile" />
         <option value="Class" />
-        <option value="JavaFXApplication" />
       </list>
     </option>
   </component>
@@ -82,7 +73,7 @@
       <workItem from="1725485400517" duration="2175000" />
       <workItem from="1725566175168" duration="3935000" />
       <workItem from="1725576866884" duration="878000" />
-      <workItem from="1725635572261" duration="3082000" />
+      <workItem from="1725635572261" duration="6409000" />
     </task>
     <task id="LOCAL-00001" summary="second commit">
       <option name="closed" value="true" />
@@ -108,7 +99,15 @@
       <option name="project" value="LOCAL" />
       <updated>1725486978368</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="third commit">
+      <option name="closed" value="true" />
+      <created>1725645379002</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1725645379002</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
