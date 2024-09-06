@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.chart.BarChart?>
+<?import javafx.scene.chart.CategoryAxis?>
+<?import javafx.scene.chart.NumberAxis?>
+<?import javafx.scene.layout.AnchorPane?>
+
+
+<AnchorPane prefHeight="534.0" prefWidth="639.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tn.java.controllers.Stat">
+   <children>
+      <BarChart fx:id="StatLieux" layoutX="47.0" layoutY="49.0" prefHeight="433.0" prefWidth="542.0">
+        <xAxis>
+          <CategoryAxis fx:id="emplacement" side="BOTTOM" />
+        </xAxis>
+        <yAxis>
+          <NumberAxis fx:id="nombreEmplacement" side="LEFT" />
+        </yAxis>
+      </BarChart>
+   </children>
+</AnchorPane>
