@@ -96,25 +96,42 @@ public class ServiceCategorie implements IService<Categorie> {
 
     public List<Event> getEventsByCategorie(int categorieId) throws SQLException {
         List<Event> events = new ArrayList<>();
-        String query = "SELECT * FROM event WHERE categorie_id = ?";
-        try (PreparedStatement statement = cnx.prepareStatement(query)) {
-            statement.setInt(1, categorieId);
-            ResultSet resultSet = statement.executeQuery();
-            while (resultSet.next()) {
-                int id = resultSet.getInt("id");
-                String nom = resultSet.getString("nom");
-                String description = resultSet.getString("description");
-                String emplacement = resultSet.getString("emplacement");
-                int nombrePlaces = resultSet.getInt("nombrePlaces");
-                LocalDate date = resultSet.getDate("date").toLocalDate();
 
-                // Créez un objet Categorie à partir de l'ID ou récupérez-le
-                Categorie categorie = new Categorie(categorieId, "Nom de la catégorie"); // Modifiez cela en fonction de vos besoins
-
-                events.add(new Event(id, nom, description, emplacement, nombrePlaces, date, categorie));
+        // D'abord, récupérer le nom de la catégorie
+        String categoryName = null;
+        String categoryQuery = "SELECT nom FROM categorie WHERE id = ?";
+        try (PreparedStatement categoryStmt = cnx.prepareStatement(categoryQuery)) {
+            categoryStmt.setInt(1, categorieId);
+            ResultSet categoryRs = categoryStmt.executeQuery();
+            if (categoryRs.next()) {
+                categoryName = categoryRs.getString("nom");
             }
         }
+
+        if (categoryName != null) {
+            // Ensuite, récupérer les événements dont la description contient le nom de la catégorie
+            String eventQuery = "SELECT * FROM event WHERE description LIKE ?";
+            try (PreparedStatement eventStmt = cnx.prepareStatement(eventQuery)) {
+                eventStmt.setString(1, "%" + categoryName + "%");
+                ResultSet eventRs = eventStmt.executeQuery();
+                while (eventRs.next()) {
+                    int id = eventRs.getInt("id");
+                    String nom = eventRs.getString("nom");
+                    String description = eventRs.getString("description");
+                    String emplacement = eventRs.getString("emplacement");
+                    int nombrePlaces = eventRs.getInt("nombre_places");
+                    LocalDate date = eventRs.getDate("date").toLocalDate();
+
+                    // Créez un objet Categorie pour l'événement, si nécessaire
+                    Categorie categorie = new Categorie(categorieId, categoryName);
+
+                    events.add(new Event(id, nom, description, emplacement, nombrePlaces, date, categorie));
+                }
+            }
+        }
+
         return events;
     }
+
 
 }

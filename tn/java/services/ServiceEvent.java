@@ -1,6 +1,7 @@
 package tn.java.services;
 
 import tn.java.entities.Event;
+import tn.java.entities.Categorie;
 import tn.java.utils.DataSource;
 
 import java.sql.*;
@@ -9,8 +10,6 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-
-
 
 public class ServiceEvent implements IService<Event> {
 
@@ -72,19 +71,21 @@ public class ServiceEvent implements IService<Event> {
 
     @Override
     public Event getOneById(int id) throws SQLException {
-        String query = "SELECT * FROM event WHERE id = ?";
+        String query = "SELECT e.*, c.id as cat_id, c.nom as cat_nom FROM event e LEFT JOIN categorie c ON e.categorie_id = c.id WHERE e.id = ?";
         Event event = null;
         try (PreparedStatement ps = cnx.prepareStatement(query)) {
             ps.setInt(1, id);
             ResultSet rs = ps.executeQuery();
             if (rs.next()) {
+                Categorie categorie = new Categorie(rs.getInt("cat_id"), rs.getString("cat_nom")); // Créez l'objet catégorie
                 event = new Event(
-                        rs.getInt("id"), // Ajout de l'ID ici
+                        rs.getInt("id"),
                         rs.getString("nom"),
                         rs.getString("description"),
                         rs.getString("emplacement"),
                         rs.getInt("nombre_places"),
-                        rs.getDate("date").toLocalDate()
+                        rs.getDate("date").toLocalDate(),
+                        categorie // Passez la catégorie
                 );
             }
         } catch (SQLException e) {
@@ -97,11 +98,19 @@ public class ServiceEvent implements IService<Event> {
     @Override
     public List<Event> getAll() throws SQLException {
         List<Event> events = new ArrayList<>();
-        String query = "SELECT * FROM event";
+        String query = "SELECT e.*, c.id as cat_id, c.nom as cat_nom FROM event e LEFT JOIN categorie c ON e.categorie_id = c.id";
         try (Statement st = cnx.createStatement(); ResultSet rs = st.executeQuery(query)) {
             while (rs.next()) {
-                Event event = new Event(rs.getInt("id"), rs.getString("nom"), rs.getString("description"),
-                        rs.getString("emplacement"), rs.getInt("nombre_places"), rs.getDate("date").toLocalDate());
+                Categorie categorie = new Categorie(rs.getInt("cat_id"), rs.getString("cat_nom")); // Créez l'objet catégorie
+                Event event = new Event(
+                        rs.getInt("id"),
+                        rs.getString("nom"),
+                        rs.getString("description"),
+                        rs.getString("emplacement"),
+                        rs.getInt("nombre_places"),
+                        rs.getDate("date").toLocalDate(),
+                        categorie // Passez la catégorie
+                );
                 events.add(event);
             }
         } catch (SQLException e) {

@@ -8,12 +8,15 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import tn.java.entities.Categorie;
+import tn.java.entities.Event;
+import tn.java.services.ServiceCategorie;
 import tn.java.utils.DataSource;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.List;
 
 public class AfficheCategorie {
 
@@ -25,6 +28,11 @@ public class AfficheCategorie {
 
     @FXML
     private ListView<String> listeview; // Utiliser une ListView pour afficher les détails des catégories
+
+    @FXML
+    private ListView<String> eventListView; // Ajout de la ListView pour afficher les événements
+
+    private ServiceCategorie serviceCategorie = new ServiceCategorie();
 
     @FXML
     void initialize() {
@@ -39,24 +47,28 @@ public class AfficheCategorie {
                 afficherCategoriesParNom(newValue.trim());
             }
         });
+
+        listeview.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue != null) {
+                int selectedCategoryId = getSelectedCategoryId(newValue);
+                afficherEvenementsParCategorie(selectedCategoryId);
+            }
+        });
     }
 
     @FXML
     void Recherche(ActionEvent event) {
         String searchTerm = SearchField.getText().trim();
         if (searchTerm.isEmpty()) {
-            // Afficher toutes les catégories si aucun terme de recherche n'est spécifié
             afficherCategories();
         } else {
-            // Filtrer les catégories par nom
             afficherCategoriesParNom(searchTerm);
         }
     }
 
-    // Méthode pour récupérer toutes les catégories depuis la base de données
     public ObservableList<Categorie> getCategories() {
         ObservableList<Categorie> categories = FXCollections.observableArrayList();
-        String query = "SELECT * FROM categorie"; // Requête pour récupérer toutes les catégories
+        String query = "SELECT * FROM categorie";
         Connection con = DataSource.getInstance().getCnx();
         try {
             PreparedStatement ps = con.prepareStatement(query);
@@ -72,14 +84,13 @@ public class AfficheCategorie {
         return categories;
     }
 
-    // Méthode pour récupérer les catégories par nom depuis la base de données
     public ObservableList<Categorie> getCategoriesByName(String name) {
         ObservableList<Categorie> categories = FXCollections.observableArrayList();
-        String query = "SELECT * FROM categorie WHERE nom LIKE ?"; // Requête SQL pour filtrer par nom
+        String query = "SELECT * FROM categorie WHERE nom LIKE ?";
         Connection con = DataSource.getInstance().getCnx();
         try {
             PreparedStatement ps = con.prepareStatement(query);
-            ps.setString(1, "%" + name + "%"); // Utiliser LIKE pour une recherche partielle
+            ps.setString(1, "%" + name + "%");
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
                 Categorie categorie = new Categorie();
@@ -92,32 +103,56 @@ public class AfficheCategorie {
         return categories;
     }
 
-    // Méthode pour afficher toutes les catégories dans la ListView
     public void afficherCategories() {
-        ObservableList<Categorie> categories = getCategories(); // Récupère toutes les catégories
+        ObservableList<Categorie> categories = getCategories();
         ObservableList<String> categoryDetails = FXCollections.observableArrayList();
 
-        // Ajoute les détails de chaque catégorie (nom) dans la ListView
         for (Categorie categorie : categories) {
             String details = "Nom: " + categorie.getNom();
-            categoryDetails.add(details); // Ajoute les détails de la catégorie
+            categoryDetails.add(details);
         }
 
-        listeview.setItems(categoryDetails); // Met à jour la ListView avec les détails
+        listeview.setItems(categoryDetails);
     }
 
-    // Méthode pour afficher les catégories filtrées par nom
     public void afficherCategoriesParNom(String nom) {
-        ObservableList<Categorie> categories = getCategoriesByName(nom); // Récupère les catégories par nom
+        ObservableList<Categorie> categories = getCategoriesByName(nom);
         ObservableList<String> categoryDetails = FXCollections.observableArrayList();
 
-        // Ajoute les détails de chaque catégorie (nom) dans la ListView
         for (Categorie categorie : categories) {
             String details = "Nom: " + categorie.getNom();
-            categoryDetails.add(details); // Ajoute les détails de la catégorie
+            categoryDetails.add(details);
         }
 
-        listeview.setItems(categoryDetails); // Met à jour la ListView avec les détails
+        listeview.setItems(categoryDetails);
+    }
+
+    private int getSelectedCategoryId(String selectedCategory) {
+        String[] parts = selectedCategory.split(":");
+        if (parts.length > 1) {
+            String nom = parts[1].trim();
+            try {
+                Categorie categorie = serviceCategorie.rechercherParNom(nom).get(0);
+                return categorie.getId();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+        return -1;
+    }
+
+    // Méthode déplacée à l'intérieur de la classe AfficheCategorie
+    public void afficherEvenementsParCategorie(int categorieId) {
+        ObservableList<String> eventDetails = FXCollections.observableArrayList();
+        try {
+            List<Event> events = serviceCategorie.getEventsByCategorie(categorieId);
+            for (Event event : events) {
+                String details = "Nom: " + event.getNom() + ", Date: " + event.getDate();
+                eventDetails.add(details);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        eventListView.setItems(eventDetails);
     }
 }
-
