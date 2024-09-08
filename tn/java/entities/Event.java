@@ -2,7 +2,6 @@ package tn.java.entities;
 
 import java.time.LocalDate;
 
-
 public class Event {
     private int id;
     private String nom;
@@ -10,25 +9,28 @@ public class Event {
     private String emplacement;
     private int nombrePlaces;
     private LocalDate date;
+    private Categorie categorie; // Ajout de la catégorie associée
 
     public Event() {
     }
 
-    public Event(int id, String nom, String description, String emplacement, int nombrePlaces, LocalDate date) {
+    public Event(int id, String nom, String description, String emplacement, int nombrePlaces, LocalDate date, Categorie categorie) {
         this.id = id;
         this.nom = nom;
         this.description = description;
         this.emplacement = emplacement;
         this.nombrePlaces = nombrePlaces;
         this.date = date;
+        this.categorie = categorie; // Initialisation de la catégorie
     }
 
-    public Event(String nom, String description, String emplacement, int nombrePlaces, LocalDate date) {
+    public Event(String nom, String description, String emplacement, int nombrePlaces, LocalDate date, Categorie categorie) {
         this.nom = nom;
         this.description = description;
         this.emplacement = emplacement;
         this.nombrePlaces = nombrePlaces;
         this.date = date;
+        this.categorie = categorie; // Initialisation de la catégorie
     }
 
     // Getters et Setters
@@ -80,6 +82,14 @@ public class Event {
         this.date = date;
     }
 
+    public Categorie getCategorie() {
+        return categorie;
+    }
+
+    public void setCategorie(Categorie categorie) {
+        this.categorie = categorie;
+    }
+
     @Override
     public String toString() {
         return "Event{" +
@@ -89,6 +99,8 @@ public class Event {
                 ", emplacement='" + emplacement + '\'' +
                 ", nombrePlaces=" + nombrePlaces +
                 ", date=" + date +
+                ", categorie=" + categorie +
                 '}';
     }
 }
+

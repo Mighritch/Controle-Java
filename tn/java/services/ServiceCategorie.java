@@ -2,9 +2,14 @@ package tn.java.services;
 
 import java.sql.*;
 import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
 
 import tn.java.entities.Categorie;
+import tn.java.entities.Event;
 import tn.java.utils.DataSource;
+import java.time.LocalDate;
+
 
 public class ServiceCategorie implements IService<Categorie> {
 
@@ -87,5 +92,24 @@ public class ServiceCategorie implements IService<Categorie> {
             }
         }
         return filteredCategories;
+    }
+
+    public List<Event> getEventsByCategorie(int categorieId) throws SQLException {
+        List<Event> events = new ArrayList<>();
+        String query = "SELECT * FROM event WHERE categorie_id = ?";
+        try (PreparedStatement statement = cnx.prepareStatement(query)) {
+            statement.setInt(1, categorieId);
+            ResultSet resultSet = statement.executeQuery();
+            while (resultSet.next()) {
+                int id = resultSet.getInt("id");
+                String nom = resultSet.getString("nom");
+                String description = resultSet.getString("description");
+                String emplacement = resultSet.getString("emplacement");
+                int nombrePlaces = resultSet.getInt("nombrePlaces");
+                LocalDate date = resultSet.getDate("date").toLocalDate();
+                events.add(new Event(id, nom, description, emplacement, nombrePlaces, date));
+            }
+        }
+        return events;
     }
 }
