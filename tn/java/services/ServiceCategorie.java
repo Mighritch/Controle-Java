@@ -107,9 +107,14 @@ public class ServiceCategorie implements IService<Categorie> {
                 String emplacement = resultSet.getString("emplacement");
                 int nombrePlaces = resultSet.getInt("nombrePlaces");
                 LocalDate date = resultSet.getDate("date").toLocalDate();
-                events.add(new Event(id, nom, description, emplacement, nombrePlaces, date));
+
+                // Créez un objet Categorie à partir de l'ID ou récupérez-le
+                Categorie categorie = new Categorie(categorieId, "Nom de la catégorie"); // Modifiez cela en fonction de vos besoins
+
+                events.add(new Event(id, nom, description, emplacement, nombrePlaces, date, categorie));
             }
         }
         return events;
     }
+
 }
