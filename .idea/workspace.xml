@@ -6,8 +6,8 @@
   <component name="ChangeListManager">
     <list default="true" id="fb9f9444-095d-4e29-90ff-6cc8610543e2" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tn/java/controllers/AjoutEvent.java" beforeDir="false" afterPath="$PROJECT_DIR$/tn/java/controllers/AjoutEvent.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tn/java/resources/AjoutEvent.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/tn/java/resources/AjoutEvent.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tn/java/controllers/AfficheEvent.java" beforeDir="false" afterPath="$PROJECT_DIR$/tn/java/controllers/AfficheEvent.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tn/java/resources/AfficheEvent.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/tn/java/resources/AfficheEvent.fxml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -73,7 +73,9 @@
       <workItem from="1725485400517" duration="2175000" />
       <workItem from="1725566175168" duration="3935000" />
       <workItem from="1725576866884" duration="878000" />
-      <workItem from="1725635572261" duration="6409000" />
+      <workItem from="1725635572261" duration="6583000" />
+      <workItem from="1725745635007" duration="2729000" />
+      <workItem from="1725791075955" duration="639000" />
     </task>
     <task id="LOCAL-00001" summary="second commit">
       <option name="closed" value="true" />
@@ -107,7 +109,23 @@
       <option name="project" value="LOCAL" />
       <updated>1725645379002</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="third commit">
+      <option name="closed" value="true" />
+      <created>1725657957246</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1725657957246</updated>
+    </task>
+    <task id="LOCAL-00006" summary="third commit">
+      <option name="closed" value="true" />
+      <created>1725658014586</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1725658014586</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">

@@ -14,6 +14,14 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
+import javafx.stage.Stage;
+import javafx.event.ActionEvent;
+import javafx.scene.control.Button;
+import java.io.IOException;
+import javafx.scene.Parent;
 
 public class AfficheEvent {
 
@@ -25,6 +33,9 @@ public class AfficheEvent {
 
     @FXML
     private Button btnRecherche;
+
+    @FXML
+    private Button btnCalendrier;
 
     @FXML
     private Button btnReserver; // Assurez-vous d'avoir un bouton pour la réservation
@@ -224,6 +235,24 @@ public class AfficheEvent {
             e.printStackTrace();
         }
     }
+
+    @FXML
+    void Calendrier(ActionEvent event) {
+        try {
+            System.out.println("Chargement du calendrier...");
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/tn/java/resources/Calendar.fxml"));
+            Parent root = loader.load();
+
+            // Ouvrir une nouvelle fenêtre pour afficher le calendrier
+            Stage stage = new Stage();
+            stage.setTitle("Calendrier des événements");
+            stage.setScene(new Scene(root));
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
 }
 
 
