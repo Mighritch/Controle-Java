@@ -38,13 +38,15 @@ public class AfficheEvent {
     private Button btnCalendrier;
 
     @FXML
-    private Button btnReserver; // Assurez-vous d'avoir un bouton pour la réservation
+    private Button btnLocalisation;
 
     @FXML
-    private ListView<String> listViewEvents; // ListView pour afficher les événements
+    private Button btnReserver;
 
-    private Event selectedEvent; // Événement actuellement sélectionné
+    @FXML
+    private ListView<String> listViewEvents;
 
+    private Event selectedEvent;
     @FXML
     void initialize() {
         // Appel de la méthode pour afficher les événements lors de l'initialisation
@@ -249,6 +251,34 @@ public class AfficheEvent {
             stage.setScene(new Scene(root));
             stage.show();
         } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @FXML
+    void Localisation(ActionEvent event) {
+        if (selectedEvent == null) {
+            // Si aucun événement n'est sélectionné, afficher un message d'erreur ou avertir l'utilisateur
+            System.out.println("Aucun événement sélectionné");
+            return;
+        }
+
+        // Récupérer l'emplacement de l'événement
+        String emplacement = selectedEvent.getEmplacement();
+
+        if (emplacement == null || emplacement.trim().isEmpty()) {
+            System.out.println("Aucun emplacement spécifié pour cet événement");
+            return;
+        }
+
+        // Créer une URL Google Maps avec l'emplacement
+        String googleMapsUrl = "https://www.google.com/maps/search/?api=1&query=" + emplacement.replace(" ", "+");
+
+        // Ouvrir l'URL dans le navigateur par défaut
+        try {
+            java.awt.Desktop.getDesktop().browse(new java.net.URI(googleMapsUrl));
+            System.out.println("Ouverture de Google Maps pour l'emplacement : " + emplacement);
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }

@@ -12,6 +12,7 @@
       <TextField fx:id="SearchField" layoutX="130.0" layoutY="258.0" prefHeight="26.0" prefWidth="84.0" />
       <Button fx:id="btnReserver" layoutX="235.0" layoutY="258.0" mnemonicParsing="false" onAction="#Reserver" text="Reservation" />
       <TextField fx:id="reservationfield" layoutX="328.0" layoutY="259.0" />
-      <Button fx:id="btnCalendrier" layoutX="209.0" layoutY="315.0" mnemonicParsing="false" onAction="#Calendrier" text="Calendrier" />
+      <Button fx:id="btnCalendrier" layoutX="48.0" layoutY="304.0" mnemonicParsing="false" onAction="#Calendrier" text="Calendrier" />
+      <Button fx:id="btnLocalisation" layoutX="141.0" layoutY="304.0" mnemonicParsing="false" onAction="#Localisation" text="Localisation" />
    </children>
 </AnchorPane>

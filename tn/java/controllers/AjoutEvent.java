@@ -64,9 +64,6 @@ public class AjoutEvent {
     private Button btnAjout;
 
     @FXML
-    private Button btnChoisirImage;
-
-    @FXML
     private Button btnModifier;
 
     @FXML
@@ -90,8 +87,6 @@ public class AjoutEvent {
     @FXML
     private TableColumn<Event, Integer> colEmplacement;
 
-    @FXML
-    private TableColumn<Event, String> colImage;
 
     @FXML
     private TableColumn<Event, String> colNom;
@@ -150,14 +145,12 @@ public class AjoutEvent {
         // Vérification que tous les champs sont remplis
         if (Nom.getText().isEmpty() || Description.getText().isEmpty() || Emplacement.getText().isEmpty() ||
                 Nombreplace.getText().isEmpty() || Date.getValue() == null) {
-            // Afficher un message d'erreur
             showAlert(AlertType.ERROR, "Erreur de validation", "Tous les champs doivent être remplis.");
             return;
         }
 
         // Vérification que les champs nom, description, emplacement ne dépassent pas 50 caractères
         if (Nom.getText().length() > 50 || Description.getText().length() > 50 || Emplacement.getText().length() > 50) {
-            // Afficher un message d'erreur
             showAlert(AlertType.ERROR, "Erreur de validation", "Nom, Description et Emplacement ne doivent pas dépasser 50 caractères.");
             return;
         }
@@ -186,7 +179,6 @@ public class AjoutEvent {
         String nom = Nom.getText();
         String description = Description.getText();
         String emplacement = Emplacement.getText();
-        String image = "default.jpg"; // Vous pouvez remplacer par le chemin réel de l'image
 
         Event newEvent = new Event(nom, description, emplacement, nombrePlaces, date);
 
@@ -196,8 +188,9 @@ public class AjoutEvent {
             Afficher(null); // Rafraîchit la table après ajout
             showAlert(AlertType.INFORMATION, "Succès", "L'événement a été ajouté avec succès.");
         } catch (SQLException e) {
+            // Affichez l'erreur SQL
+            showAlert(AlertType.ERROR, "Erreur d'ajout", "Erreur lors de l'ajout de l'événement : " + e.getMessage());
             e.printStackTrace();
-            showAlert(AlertType.ERROR, "Erreur d'ajout", "Erreur lors de l'ajout de l'événement.");
         }
     }
 
@@ -207,18 +200,6 @@ public class AjoutEvent {
         alert.setHeaderText(null);
         alert.setContentText(message);
         alert.showAndWait();
-    }
-
-    @FXML
-    void ChoisirImage(ActionEvent event) {
-        FileChooser fileChooser = new FileChooser();
-        fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Image Files", "*.png", "*.jpg", "*.jpeg"));
-        File selectedFile = fileChooser.showOpenDialog(null);
-
-        if (selectedFile != null) {
-            // Assignez le chemin de l'image à l'événement
-            // Par exemple : eventImagePath = selectedFile.getAbsolutePath();
-        }
     }
 
     @FXML
@@ -323,7 +304,4 @@ public class AjoutEvent {
             showAlert(Alert.AlertType.ERROR, "Erreur", "Erreur lors du chargement des statistiques.");
         }
     }
-
-
-
 }
