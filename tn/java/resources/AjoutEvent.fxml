@@ -11,13 +11,13 @@
 
 <AnchorPane prefHeight="536.0" prefWidth="843.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tn.java.controllers.AjoutEvent">
     <children>
-        <TableView fx:id="Table" layoutX="293.0" layoutY="52.0" prefHeight="200.0" prefWidth="458.0">
+        <TableView fx:id="Table" layoutX="293.0" layoutY="52.0" onMouseClicked="#onEventSelected" prefHeight="200.0" prefWidth="537.0">
             <columns>
-                <TableColumn fx:id="colNom" prefWidth="75.0" text="Nom" />
-                <TableColumn fx:id="colDescription" prefWidth="75.0" text="Description" />
-                <TableColumn fx:id="colEmplacement" prefWidth="104.00003051757812" text="Emplacement" />
-                <TableColumn fx:id="colNombreplace" prefWidth="100.79998779296875" text="Nombre place" />
-                <TableColumn fx:id="colDate" prefWidth="100.79998779296875" text="Date" />
+                <TableColumn fx:id="colNom" prefWidth="111.20001220703125" text="Nom" />
+                <TableColumn fx:id="colDescription" prefWidth="116.80001831054688" text="Description" />
+                <TableColumn fx:id="colEmplacement" prefWidth="128.800048828125" text="Emplacement" />
+                <TableColumn fx:id="colNombreplace" prefWidth="95.99993896484375" text="Nombre place" />
+                <TableColumn fx:id="colDate" prefWidth="82.4000244140625" text="Date" />
             </columns>
         </TableView>
         <Button fx:id="btnAjout" layoutX="71.0" layoutY="343.0" mnemonicParsing="false" onAction="#Ajouter" text="Ajouter" />

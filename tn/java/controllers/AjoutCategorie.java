@@ -204,5 +204,3 @@ public class AjoutCategorie {
         alert.showAndWait();
     }
 }
-
-

@@ -6,10 +6,9 @@
   <component name="ChangeListManager">
     <list default="true" id="fb9f9444-095d-4e29-90ff-6cc8610543e2" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tn/java/controllers/AfficheCategorie.java" beforeDir="false" afterPath="$PROJECT_DIR$/tn/java/controllers/AfficheCategorie.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tn/java/entities/Event.java" beforeDir="false" afterPath="$PROJECT_DIR$/tn/java/entities/Event.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tn/java/resources/AfficheCategorie.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/tn/java/resources/AfficheCategorie.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tn/java/services/ServiceCategorie.java" beforeDir="false" afterPath="$PROJECT_DIR$/tn/java/services/ServiceCategorie.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tn/java/controllers/AjoutCategorie.java" beforeDir="false" afterPath="$PROJECT_DIR$/tn/java/controllers/AjoutCategorie.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tn/java/controllers/AjoutEvent.java" beforeDir="false" afterPath="$PROJECT_DIR$/tn/java/controllers/AjoutEvent.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tn/java/resources/AjoutEvent.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/tn/java/resources/AjoutEvent.fxml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/tn/java/services/ServiceEvent.java" beforeDir="false" afterPath="$PROJECT_DIR$/tn/java/services/ServiceEvent.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -78,7 +77,11 @@
       <workItem from="1725576866884" duration="878000" />
       <workItem from="1725635572261" duration="6583000" />
       <workItem from="1725745635007" duration="2729000" />
-      <workItem from="1725791075955" duration="7898000" />
+      <workItem from="1725791075955" duration="7969000" />
+      <workItem from="1725869583477" duration="792000" />
+      <workItem from="1725972999603" duration="1448000" />
+      <workItem from="1725985786323" duration="2550000" />
+      <workItem from="1726043129976" duration="262000" />
     </task>
     <task id="LOCAL-00001" summary="second commit">
       <option name="closed" value="true" />
@@ -168,7 +171,15 @@
       <option name="project" value="LOCAL" />
       <updated>1725803556579</updated>
     </task>
-    <option name="localTasksCounter" value="12" />
+    <task id="LOCAL-00012" summary="third commit">
+      <option name="closed" value="true" />
+      <created>1725811822928</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1725811822928</updated>
+    </task>
+    <option name="localTasksCounter" value="13" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">

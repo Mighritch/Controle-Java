@@ -18,15 +18,23 @@ public class ServiceEvent implements IService<Event> {
 
     @Override
     public void ajouter(Event event) throws SQLException {
-        String query = "INSERT INTO event (nom, description, emplacement, nombre_places, date) VALUES (?, ?, ?, ?, ?)";
+        String query = "INSERT INTO event (nom, description, emplacement, nombre_places, date, categorie_id) VALUES (?, ?, ?, ?, ?, ?)";
         try (PreparedStatement ps = cnx.prepareStatement(query)) {
             ps.setString(1, event.getNom());
             ps.setString(2, event.getDescription());
             ps.setString(3, event.getEmplacement());
             ps.setInt(4, event.getNombrePlaces());
             ps.setDate(5, Date.valueOf(event.getDate()));
+
+            // Si aucune catégorie n'est spécifiée, on utilise la catégorie par défaut (id 1 dans cet exemple)
+            if (event.getCategorie() == null) {
+                ps.setInt(6, 1);  // ID de la catégorie par défaut
+            } else {
+                ps.setInt(6, event.getCategorie().getId());
+            }
+
             ps.executeUpdate();
-            System.out.println("Event ajouté avec succès !");
+            System.out.println("Événement ajouté avec succès !");
         } catch (SQLException e) {
             e.printStackTrace();
             throw new SQLException("Erreur lors de l'ajout de l'événement : " + e.getMessage());

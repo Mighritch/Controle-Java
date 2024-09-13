@@ -186,9 +186,9 @@ public class AjoutEvent {
         try {
             serviceEvent.ajouter(newEvent);
             Afficher(null); // Rafraîchit la table après ajout
+            clearFields();   // Vider les champs après ajout
             showAlert(AlertType.INFORMATION, "Succès", "L'événement a été ajouté avec succès.");
         } catch (SQLException e) {
-            // Affichez l'erreur SQL
             showAlert(AlertType.ERROR, "Erreur d'ajout", "Erreur lors de l'ajout de l'événement : " + e.getMessage());
             e.printStackTrace();
         }
@@ -216,7 +216,8 @@ public class AjoutEvent {
             ServiceEvent serviceEvent = new ServiceEvent();
             try {
                 serviceEvent.modifier(selectedEvent);
-                Afficher(null); // Refresh the table
+                Afficher(null); // Rafraîchir le tableau après modification
+                clearFields();   // Vider les champs après modification
             } catch (SQLException e) {
                 e.printStackTrace();
             }
@@ -231,77 +232,120 @@ public class AjoutEvent {
             ServiceEvent serviceEvent = new ServiceEvent();
             try {
                 serviceEvent.supprimer(selectedEvent.getId()); // Suppression par ID
-                Afficher(null); // Refresh the table
+                Afficher(null); // Rafraîchir le tableau après suppression
+                clearFields();   // Vider les champs après suppression
             } catch (SQLException e) {
                 e.printStackTrace();
             }
         }
     }
 
-    @FXML
-    void Recherche(ActionEvent event) {
-        String rechercheNom = SearchField.getText();
-        ServiceEvent service = new ServiceEvent();
+        @FXML
+        void Recherche (ActionEvent event){
+            String rechercheNom = SearchField.getText();
+            ServiceEvent service = new ServiceEvent();
 
-        try {
-            List<Event> events = service.rechercherParNom(rechercheNom); // Rechercher les événements par nom
-            ObservableList<Event> observableEvents = FXCollections.observableArrayList(events);
-            Table.setItems(observableEvents); // Mettre à jour le TableView avec les résultats de la recherche
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
-
-    @FXML
-    void Tri(ActionEvent event) {
-        // Obtenez la liste des événements actuels de la TableView
-        ObservableList<Event> sortedList = FXCollections.observableArrayList(Table.getItems());
-
-        // Triez la liste selon le nom (ordre alphabétique)
-        sortedList.sort((event1, event2) -> event1.getNom().compareToIgnoreCase(event2.getNom()));
-
-        // Mettez à jour le TableView avec la liste triée
-        Table.setItems(sortedList);
-    }
-
-    @FXML
-    void Stat(ActionEvent event) {
-        try {
-            // Requête SQL pour récupérer le nombre d'événements par emplacement
-            String query = "SELECT emplacement, COUNT(*) AS nombre_events FROM event GROUP BY emplacement";
-
-            Connection con = DataSource.getInstance().getCnx();
-            PreparedStatement sp = con.prepareStatement(query);
-            ResultSet rs = sp.executeQuery();
-
-            // Stocker les résultats dans une Map ou une liste pour les passer au graphique
-            Map<String, Integer> stats = new HashMap<>();
-
-            while (rs.next()) {
-                String emplacement = rs.getString("emplacement");
-                int nombreEvents = rs.getInt("nombre_events");
-                stats.put(emplacement, nombreEvents); // Ajouter chaque emplacement et son nombre d'événements
+            try {
+                List<Event> events = service.rechercherParNom(rechercheNom); // Rechercher les événements par nom
+                ObservableList<Event> observableEvents = FXCollections.observableArrayList(events);
+                Table.setItems(observableEvents); // Mettre à jour le TableView avec les résultats de la recherche
+            } catch (SQLException e) {
+                e.printStackTrace();
             }
-
-            // Création d'un FXMLLoader
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/tn/java/resources/stat.fxml"));
-
-            // Chargement du fichier FXML
-            Parent root = loader.load();
-
-            // Récupérer le contrôleur du fichier FXML pour y injecter les données
-            Stat statController = loader.getController();
-            statController.displayStats(stats); // Passer les données récupérées au contrôleur des statistiques
-
-            // Création de la scène et du stage
-            Stage stage = new Stage();
-            stage.setScene(new Scene(root));
-            stage.setTitle("Statistiques des lieux");
-            stage.show();
-        } catch (IOException | SQLException e) {
-            // Gestion des erreurs
-            e.printStackTrace();
-            showAlert(Alert.AlertType.ERROR, "Erreur", "Erreur lors du chargement des statistiques.");
         }
+
+        @FXML
+        void Tri (ActionEvent event){
+            // Obtenez la liste des événements actuels de la TableView
+            ObservableList<Event> sortedList = FXCollections.observableArrayList(Table.getItems());
+
+            // Triez la liste selon le nom (ordre alphabétique)
+            sortedList.sort((event1, event2) -> event1.getNom().compareToIgnoreCase(event2.getNom()));
+
+            // Mettez à jour le TableView avec la liste triée
+            Table.setItems(sortedList);
+        }
+
+        @FXML
+        void Stat (ActionEvent event){
+            try {
+                // Requête SQL pour récupérer le nombre d'événements par emplacement
+                String query = "SELECT emplacement, COUNT(*) AS nombre_events FROM event GROUP BY emplacement";
+
+                Connection con = DataSource.getInstance().getCnx();
+                PreparedStatement sp = con.prepareStatement(query);
+                ResultSet rs = sp.executeQuery();
+
+                // Stocker les résultats dans une Map ou une liste pour les passer au graphique
+                Map<String, Integer> stats = new HashMap<>();
+
+                while (rs.next()) {
+                    String emplacement = rs.getString("emplacement");
+                    int nombreEvents = rs.getInt("nombre_events");
+                    stats.put(emplacement, nombreEvents); // Ajouter chaque emplacement et son nombre d'événements
+                }
+
+                // Création d'un FXMLLoader
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/tn/java/resources/stat.fxml"));
+
+                // Chargement du fichier FXML
+                Parent root = loader.load();
+
+                // Récupérer le contrôleur du fichier FXML pour y injecter les données
+                Stat statController = loader.getController();
+                statController.displayStats(stats); // Passer les données récupérées au contrôleur des statistiques
+
+                // Création de la scène et du stage
+                Stage stage = new Stage();
+                stage.setScene(new Scene(root));
+                stage.setTitle("Statistiques des lieux");
+                stage.show();
+            } catch (IOException | SQLException e) {
+                // Gestion des erreurs
+                e.printStackTrace();
+                showAlert(Alert.AlertType.ERROR, "Erreur", "Erreur lors du chargement des statistiques.");
+            }
+        }
+
+        @FXML
+        public void initialize () {
+            // Lier les colonnes du TableView avec les propriétés de l'Event
+            colNom.setCellValueFactory(new PropertyValueFactory<>("nom"));
+            colDescription.setCellValueFactory(new PropertyValueFactory<>("description"));
+            colEmplacement.setCellValueFactory(new PropertyValueFactory<>("emplacement"));
+            colNombreplace.setCellValueFactory(new PropertyValueFactory<>("nombrePlaces"));
+            colDate.setCellValueFactory(new PropertyValueFactory<>("date"));
+
+            // Charger les événements dans le TableView
+            Table.setItems(getAllEvents());  // Méthode qui récupère tous les événements
+        }
+
+        @FXML
+        public void onEventSelected () {
+            Event selectedEvent = Table.getSelectionModel().getSelectedItem();
+
+            if (selectedEvent != null) {
+                // Remplir les champs avec les données de l'événement sélectionné
+                Nom.setText(selectedEvent.getNom());
+                Description.setText(selectedEvent.getDescription());
+                Emplacement.setText(selectedEvent.getEmplacement());
+                Nombreplace.setText(String.valueOf(selectedEvent.getNombrePlaces()));
+                Date.setValue(selectedEvent.getDate());
+            }
+        }
+
+        private ObservableList<Event> getAllEvents () {
+            ObservableList<Event> events = FXCollections.observableArrayList();
+            // Ajoutez ici la logique pour récupérer les événements depuis la base de données
+            return events;
+        }
+
+        private void clearFields () {
+            Nom.clear();
+            Description.clear();
+            Emplacement.clear();
+            Nombreplace.clear();
+            Date.setValue(null);
+        }
+
     }
-}
